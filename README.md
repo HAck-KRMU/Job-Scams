@@ -8,7 +8,8 @@ This project combines **Cybersecurity, AI/ML, OSINT, Browser Security, and Digit
 
 ## 🚀 Key Features
 
-- Real-time detection of suspicious job links
+- Real-time detection of suspicious links
+  
 - Fake recruiter & scam behavior analysis
 - Domain reputation & WHOIS intelligence
 - ML-based phishing detection
