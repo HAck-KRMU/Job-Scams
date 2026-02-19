@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SentinelX Alerts Center Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f68f9",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#0a0c10",
+                        "card-dark": "#161b22",
+                        "accent-red": "#f91f1f",
+                        "accent-amber": "#f9a11f",
+                        "accent-blue": "#1f68f9",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glass-card {
+            background: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .critical-glow {
+            box-shadow: 0 0 15px rgba(249, 31, 31, 0.15);
+            border: 1px solid rgba(249, 31, 31, 0.4) !important;
+        }
+        .pulse-red {
+            box-shadow: 0 0 0 0 rgba(249, 31, 31, 0.7);
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(249, 31, 31, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(249, 31, 31, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(249, 31, 31, 0); }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark hidden lg:flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">shield_person</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">SentinelX</h1>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-primary hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-medium">Alerts Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-primary hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-medium">Threat Maps</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-primary hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-medium">Archive</span>
+</a>
+<div class="pt-8 pb-4 px-4">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Intelligence</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-primary hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium">Scam Trends</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:text-primary hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-800">
+<div class="bg-primary/5 rounded-xl p-4">
+<p class="text-xs text-slate-400 mb-2">System Status</p>
+<div class="flex items-center gap-2">
+<div class="size-2 bg-green-500 rounded-full animate-pulse"></div>
+<span class="text-sm font-semibold">Active &amp; Shielded</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-background-dark/50">
+<!-- Top Navbar -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-background-dark/50 backdrop-blur-md flex items-center justify-between px-8 z-10">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative max-w-md w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-900 border-none rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary text-sm" placeholder="Search alerts, platforms, or scam IDs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-900 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-blue-400 text-lg">send</span>
+<span class="text-xs font-medium">Telegram Sync</span>
+<button class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full bg-primary transition-colors focus:outline-none">
+<span class="translate-x-4 inline-block h-4 w-4 transform rounded-full bg-white transition shadow-sm"></span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold">Admin Panel</p>
+<p class="text-[10px] text-slate-500">Security Officer</p>
+</div>
+<div class="size-10 rounded-full bg-gradient-to-tr from-primary to-purple-500 p-0.5" data-alt="User profile avatar gradient">
+<div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">person</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Alerts Feed Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-5xl mx-auto">
+<!-- Header Actions -->
+<div class="flex items-end justify-between mb-8">
+<div>
+<h2 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                                Alerts Center
+                                <span class="bg-accent-red/20 text-accent-red text-xs px-2 py-1 rounded-full border border-accent-red/30">12 Critical</span>
+</h2>
+<p class="text-slate-500 mt-1">Real-time fraud detection and automated response management.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                                Filter
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">download</span>
+                                Export Logs
+                            </button>
+</div>
+</div>
+<!-- Alerts List -->
+<div class="space-y-4">
+<!-- Critical Alert Card -->
+<div class="glass-card critical-glow p-5 rounded-xl flex gap-6 items-start">
+<div class="flex flex-col items-center">
+<div class="size-12 rounded-lg bg-accent-red/10 flex items-center justify-center text-accent-red">
+<span class="material-symbols-outlined text-3xl">warning</span>
+</div>
+<div class="mt-3 pulse-red size-2 rounded-full bg-accent-red"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-black uppercase tracking-widest text-accent-red bg-accent-red/10 px-2 py-0.5 rounded">Critical Severity</span>
+<span class="text-xs text-slate-500">• 2 minutes ago</span>
+<span class="text-xs text-slate-500">• ID: SN-92412</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">AI-Detected Bulk WhatsApp Job Scam</h3>
+<p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                    Coordinated automated messages detected targeting users in Bangalore region. Scammers impersonating "Amazon India Recruitment" promising ₹5000/day for likes.
+                                </p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+<span class="material-symbols-outlined text-sm text-green-400">forum</span>
+<span class="text-xs font-medium">WhatsApp</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+<span class="material-symbols-outlined text-sm text-blue-400">location_on</span>
+<span class="text-xs font-medium">Karnataka, India</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="px-4 py-2 rounded-lg bg-accent-red text-white text-xs font-bold hover:bg-accent-red/90 transition-all uppercase tracking-wider">Investigate</button>
+<button class="px-4 py-2 rounded-lg bg-transparent border border-slate-700 text-slate-300 text-xs font-bold hover:bg-slate-800 transition-all uppercase tracking-wider">Block IP</button>
+</div>
+</div>
+<!-- High Alert Card -->
+<div class="glass-card p-5 rounded-xl flex gap-6 items-start border-l-4 border-l-accent-amber">
+<div class="flex flex-col items-center">
+<div class="size-12 rounded-lg bg-accent-amber/10 flex items-center justify-center text-accent-amber">
+<span class="material-symbols-outlined text-3xl">emergency_home</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-black uppercase tracking-widest text-accent-amber bg-accent-amber/10 px-2 py-0.5 rounded">High Severity</span>
+<span class="text-xs text-slate-500">• 14 minutes ago</span>
+<span class="text-xs text-slate-500">• ID: SN-92408</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">Telegram Task Fraud Pattern</h3>
+<p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                    Multiple reports of "Pre-paid tasks" from handle @task_master_01. Pattern matches known phishing cluster 'Viper7'.
+                                </p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+<span class="material-symbols-outlined text-sm text-blue-400">send</span>
+<span class="text-xs font-medium">Telegram</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary/20 text-primary text-xs font-bold hover:bg-primary/30 transition-all uppercase tracking-wider">Investigate</button>
+<button class="px-4 py-2 rounded-lg bg-transparent border border-slate-700 text-slate-300 text-xs font-bold hover:bg-slate-800 transition-all uppercase tracking-wider">Dismiss</button>
+</div>
+</div>
+<!-- Info Alert Card -->
+<div class="glass-card p-5 rounded-xl flex gap-6 items-start border-l-4 border-l-primary/50">
+<div class="flex flex-col items-center">
+<div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">info</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-black uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded">Info Status</span>
+<span class="text-xs text-slate-500">• 1 hour ago</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">New LinkedIn Verification Required</h3>
+<p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                    Suspicious recruiter profile detected but currently inactive. Monitoring for outbound link generation.
+                                </p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+<span class="material-symbols-outlined text-sm text-sky-400">link</span>
+<span class="text-xs font-medium">LinkedIn</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary/20 text-primary text-xs font-bold hover:bg-primary/30 transition-all uppercase tracking-wider">Track</button>
+</div>
+</div>
+<!-- Another Critical Alert Card -->
+<div class="glass-card critical-glow p-5 rounded-xl flex gap-6 items-start">
+<div class="flex flex-col items-center">
+<div class="size-12 rounded-lg bg-accent-red/10 flex items-center justify-center text-accent-red">
+<span class="material-symbols-outlined text-3xl">lock_open</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-black uppercase tracking-widest text-accent-red bg-accent-red/10 px-2 py-0.5 rounded">Critical Severity</span>
+<span class="text-xs text-slate-500">• 2 hours ago</span>
+<span class="text-xs text-slate-500">• ID: SN-92388</span>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">Payment Gateway Hijack Attempt</h3>
+<p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                    Real-time detection of a fraudulent UPI payment interface mimicking Google Pay. 45 users currently on site.
+                                </p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+<span class="material-symbols-outlined text-sm text-amber-400">payments</span>
+<span class="text-xs font-medium">UPI Gateway</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+<span class="material-symbols-outlined text-sm text-red-400">dangerous</span>
+<span class="text-xs font-medium">45 Active Victims</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="px-4 py-2 rounded-lg bg-accent-red text-white text-xs font-bold hover:bg-accent-red/90 transition-all uppercase tracking-wider">Kill Domain</button>
+<button class="px-4 py-2 rounded-lg bg-transparent border border-slate-700 text-slate-300 text-xs font-bold hover:bg-slate-800 transition-all uppercase tracking-wider">Details</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Side Panel - Stats & Quick Info -->
+<aside class="w-80 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark hidden xl:flex flex-col p-6 overflow-y-auto">
+<h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">Threat Intelligence</h3>
+<div class="space-y-6">
+<!-- Map Widget -->
+<div class="rounded-xl overflow-hidden relative group">
+<img class="w-full h-40 object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-500" data-alt="Cybersecurity threat map of India hotspots" data-location="India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw3jN_cnAR_-9ZGJ33BlN2ulH_h66-R5hjo3Nd1BxPAEN4o7Bo7ZUTABCsjXgeww32ZZErD79qI5nVVuoX7MaVPq-YZpk_xNHDeopyF-FzVqS6qlMlgnDWGCdQhppR2co-BACWvTew9A_J4YZNAMORlaoxIrYr7wiMKf_xLsMFm9jMPV1N5I-ithshzY395ZlVr-SMvBa1nDkB0nAwFOplpoM-7T-TC7bypS1a_q6TDziq4bhEDpB4_1f2PEUFYgK-BWd4UUVWXjs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<p class="text-xs font-bold text-white">Active Hotspots</p>
+<p class="text-[10px] text-slate-400">Delhi, Mumbai, Bengaluru</p>
+</div>
+<div class="absolute top-4 right-4">
+<span class="flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-red opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-accent-red"></span>
+</span>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 gap-4">
+<div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+<p class="text-xs text-slate-500 mb-1">Total Threats Blocked</p>
+<div class="flex items-end justify-between">
+<span class="text-2xl font-black text-white">148,902</span>
+<span class="text-xs text-green-400 font-bold">+12.4%</span>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+<p class="text-xs text-slate-500 mb-1">Active Scams (24h)</p>
+<div class="flex items-end justify-between">
+<span class="text-2xl font-black text-white">1,245</span>
+<span class="text-xs text-accent-red font-bold">+4.1%</span>
+</div>
+</div>
+</div>
+<!-- Recent Activity Mini Feed -->
+<div>
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Auto-Actions Log</h4>
+<ul class="space-y-4">
+<li class="flex gap-3 text-xs leading-tight">
+<div class="size-2 mt-1 rounded-full bg-green-500 shrink-0"></div>
+<div>
+<p class="text-slate-300 font-medium">Domain Blocked</p>
+<p class="text-slate-500">amzn-rewards.in blacklisted</p>
+<p class="text-[10px] text-slate-600 mt-1">12s ago</p>
+</div>
+</li>
+<li class="flex gap-3 text-xs leading-tight">
+<div class="size-2 mt-1 rounded-full bg-blue-500 shrink-0"></div>
+<div>
+<p class="text-slate-300 font-medium">Telegram Sync Active</p>
+<p class="text-slate-500">Forwarding alerts to #Ops_Main</p>
+<p class="text-[10px] text-slate-600 mt-1">45s ago</p>
+</div>
+</li>
+<li class="flex gap-3 text-xs leading-tight">
+<div class="size-2 mt-1 rounded-full bg-accent-amber shrink-0"></div>
+<div>
+<p class="text-slate-300 font-medium">Reporting API</p>
+<p class="text-slate-500">Sent bulk report to WhatsApp Security</p>
+<p class="text-[10px] text-slate-600 mt-1">3m ago</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="p-4 rounded-xl border border-dashed border-slate-700">
+<p class="text-xs text-center text-slate-500 italic">"AI Core Processing at 94% efficiency. No latency detected in Bangalore nodes."</p>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

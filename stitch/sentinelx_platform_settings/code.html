@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SentinelX | Platform Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f68f9",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#0f1623",
+                        "glass": "rgba(31, 104, 249, 0.05)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(15, 22, 35, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-border {
+            box-shadow: 0 0 10px rgba(31, 104, 249, 0.3);
+        }
+        .slider-thumb::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #1f68f9;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(31, 104, 249, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen overflow-x-hidden">
+<div class="relative flex min-h-screen flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 py-4 lg:px-12">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary">shield_locked</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">SentinelX</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Detections</a>
+<a class="text-primary text-sm font-semibold transition-colors" href="#">Settings</a>
+<a class="text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+<input class="bg-white/5 border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary focus:border-primary w-64 transition-all" placeholder="Search system..." type="text"/>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-white/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar of a security professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPyARW-327JEc1jt4AwJHRnPbtvZ7JgH2s-44WZMhHFeClY1TGI4O_9jFxrdY1Cbx18S3r-V_8ULBq_Fd90B3EAVi9cwaPgcI1dO7HsbuAJ6oUA-uVhdIH4DsTSGLNNIH7flvZCG9KAT0W9U5HKWDcub6Kut3_fwjTPgNLNfKEKDiYGjPlzqDegHeMm8_YplR6M1IfWBG47pg8GzNVoYaSbU6Ga7gkNVFkVTKETTLBGA_8ZSS6JQMuMS50Gf-uVKbIs8pDlSStKhQ"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 flex-col lg:flex-row">
+<!-- Sidebar -->
+<aside class="w-full lg:w-72 border-r border-white/10 p-6 flex flex-col gap-8">
+<div>
+<h1 class="text-2xl font-bold mb-1">Settings</h1>
+<p class="text-slate-500 text-xs uppercase tracking-widest font-semibold">Config v2.4.0</p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">General Configuration</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary border border-primary/20 transition-all" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="text-sm font-medium">Detection Engine</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">key</span>
+<span class="text-sm font-medium">API Management</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">integration_instructions</span>
+<span class="text-sm font-medium">Integrations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="text-sm font-medium">Data &amp; Exports</span>
+</a>
+</div>
+<div class="mt-auto p-4 rounded-xl glass-panel border-primary/20">
+<div class="flex items-center gap-2 mb-2">
+<div class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-xs font-bold text-slate-300">SYSTEM STATUS: OPTIMAL</span>
+</div>
+<p class="text-[10px] text-slate-500 leading-tight">All AI models are synchronized and scanning live traffic across India nodes.</p>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-6 lg:p-12 max-w-5xl mx-auto w-full">
+<!-- Section: Detection Engine -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h3 class="text-xl font-bold text-white mb-1">AI Detection Engine</h3>
+<p class="text-slate-400 text-sm">Tune the sensitivity of the fraud detection algorithms.</p>
+</div>
+<button class="px-6 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-sm font-bold transition-all shadow-lg shadow-primary/20">
+                            Apply Parameters
+                        </button>
+</div>
+<div class="glass-panel rounded-xl p-8 border-white/5">
+<div class="mb-10">
+<div class="flex justify-between items-end mb-4">
+<label class="text-sm font-semibold text-slate-300">Alert Sensitivity</label>
+<span class="text-primary font-bold px-3 py-1 bg-primary/10 rounded-full text-xs border border-primary/30 uppercase tracking-wider">Paranoid Mode Active</span>
+</div>
+<input class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer slider-thumb" max="5" min="1" type="range" value="4"/>
+<div class="flex justify-between mt-3 px-1">
+<span class="text-[10px] text-slate-500 font-bold">RELAXED</span>
+<span class="text-[10px] text-slate-500 font-bold">BALANCED</span>
+<span class="text-[10px] text-slate-300 font-bold">STRICT</span>
+<span class="text-[10px] text-primary font-bold underline underline-offset-4">PARANOID</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-6">
+<div class="flex-1 p-5 rounded-lg border border-white/5 bg-white/5">
+<div class="flex items-center justify-between mb-2">
+<h4 class="text-sm font-bold text-slate-200">Real-time Scanning</h4>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="text-xs text-slate-500">Analyze incoming messages and social media profiles instantly.</p>
+</div>
+<div class="flex-1 p-5 rounded-lg border border-white/5 bg-white/5">
+<div class="flex items-center justify-between mb-2">
+<h4 class="text-sm font-bold text-slate-200">Chrome Extension</h4>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="text-xs text-slate-500">Overlay fraud risk assessments directly in your browser.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: API Management -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-white">API Key Management</h3>
+<button class="flex items-center gap-2 text-primary hover:text-white text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+                            Generate New Key
+                        </button>
+</div>
+<div class="grid gap-4">
+<div class="glass-panel rounded-xl p-5 flex items-center justify-between border-white/5 group hover:border-primary/30 transition-all">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded bg-white/5 text-slate-400 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-200">Production Main Key</p>
+<code class="text-xs text-slate-500 font-mono tracking-widest">sx_live_••••••••••••9823</code>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 hover:text-white transition-colors" title="Copy Key">
+<span class="material-symbols-outlined text-xl">content_copy</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-red-400 transition-colors" title="Revoke">
+<span class="material-symbols-outlined text-xl">refresh</span>
+</button>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-5 flex items-center justify-between border-white/5 group hover:border-primary/30 transition-all">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded bg-white/5 text-slate-400 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">code</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-200">Dev Staging</p>
+<code class="text-xs text-slate-500 font-mono tracking-widest">sx_test_••••••••••••4120</code>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 hover:text-white transition-colors" title="Copy Key">
+<span class="material-symbols-outlined text-xl">content_copy</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-red-400 transition-colors" title="Revoke">
+<span class="material-symbols-outlined text-xl">refresh</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Model Maintenance -->
+<section class="mb-12">
+<div class="glass-panel rounded-xl p-8 border-primary/20 bg-primary/5">
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1">
+<h3 class="text-xl font-bold text-white mb-2">Model Retraining</h3>
+<p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                    Updates SentinelX AI with the latest reported job scam patterns and social engineering tactics from the past 24 hours. Recommended daily maintenance.
+                                </p>
+<div class="w-full bg-slate-800 rounded-full h-10 p-1 flex items-center overflow-hidden relative">
+<div class="h-full bg-primary rounded-full transition-all duration-500 neon-border" style="width: 65%;"></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="text-xs font-bold text-white uppercase tracking-widest">Training Progress: 65%</span>
+</div>
+</div>
+</div>
+<div class="flex-shrink-0">
+<button class="flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-xl font-bold hover:brightness-110 transition-all active:scale-95 shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined">restart_alt</span>
+                                    Retrain Now
+                                </button>
+</div>
+</div>
+<div class="mt-6 flex items-center gap-4 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+<span>Last training: Today, 04:22 AM</span>
+<span class="text-slate-700">|</span>
+<span>Dataset: 2.1M Samples</span>
+<span class="text-slate-700">|</span>
+<span>Region: India (Tier 1/2 Cities)</span>
+</div>
+</div>
+</section>
+<!-- Section: Data Export -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-white">Data Export</h3>
+<div class="flex items-center bg-white/5 rounded-lg p-1 border border-white/10">
+<button class="px-4 py-1.5 text-xs font-bold bg-primary rounded-md text-white">CSV</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-400 hover:text-white transition-all">JSON</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-400 hover:text-white transition-all">PDF</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="glass-panel p-6 rounded-xl border-white/5 flex flex-col justify-between h-40 group hover:border-primary/20 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">history</span>
+<h4 class="font-bold text-slate-200">Detection History</h4>
+</div>
+<p class="text-xs text-slate-500">Comprehensive logs of all flagged activities, risk scores, and entity profiles.</p>
+<button class="text-sm font-bold text-primary hover:underline text-left">Export Logs (2.4 GB)</button>
+</div>
+<div class="glass-panel p-6 rounded-xl border-white/5 flex flex-col justify-between h-40 group hover:border-primary/20 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">analytics</span>
+<h4 class="font-bold text-slate-200">Performance Metrics</h4>
+</div>
+<p class="text-xs text-slate-500">System throughput, model accuracy ratings, and false positive ratios.</p>
+<button class="text-sm font-bold text-primary hover:underline text-left">Export Report (12 MB)</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Background Decorative Elements -->
+<div class="fixed top-0 right-0 -z-10 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 -z-10 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+</div>
+</body></html>

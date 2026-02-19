@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SentinelX Global Heatmap Monitor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f68f9",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#0f1623",
+                        "threat-low": "#ff8c00",
+                        "threat-high": "#ff0000",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 22, 35, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(31, 104, 249, 0.2);
+        }
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(31, 104, 249, 0.1);
+            border-top: 1px solid rgba(31, 104, 249, 0.3);
+            white-space: nowrap;
+        }
+        .ticker-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+        .map-hotspot {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.6;
+        }
+        .pulse {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 h-screen w-screen relative">
+<!-- Full Screen Map Background -->
+<div class="absolute inset-0 z-0 bg-slate-950 overflow-hidden">
+<!-- Mock Map Layers -->
+<div class="absolute inset-0 opacity-40 grayscale contrast-125" data-alt="Dark stylized map of India with terrain contours" data-location="India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAf-T5JPMRRLH2Ie2kkTzd_l0LOr2R2rX-HdW5zxwBgWWrsx90FQgTfcxaCl-MZ9iHrOOm4-HpeM-Mto5niKMhgKCzVR8Q_8asfhxYyLDmzlpNTxPYkUrOttNiOApSJ-4R-ev73m7Yl0epyUPwjXRwJWXhl0j2L-HFXED1JuDkmXgNqfx8Pq7i6kepE7XDg7NuwP6bWH9Kl4_N-zYKHXGUu6PUZB_Jdnct8uvyrDtR1WIUYQYrj0SSKYdGqsRX8EKvaM8plv5g0r-M'); background-size: cover;">
+</div>
+<!-- Glowing Heatmap Hotspots -->
+<div class="map-hotspot bg-threat-high w-64 h-64 top-1/4 left-1/3 pulse"></div>
+<div class="map-hotspot bg-threat-low w-48 h-48 top-1/2 right-1/4 pulse" style="animation-delay: -1s"></div>
+<div class="map-hotspot bg-threat-high w-32 h-32 bottom-1/4 left-1/2 pulse" style="animation-delay: -0.5s"></div>
+<div class="map-hotspot bg-threat-low w-56 h-56 top-1/3 right-1/2 pulse"></div>
+<!-- Coordinates Grid Overlay -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#1f68f9 1px, transparent 1px); background-size: 40px 40px;">
+</div>
+</div>
+<!-- Header Overlay -->
+<header class="relative z-10 flex items-center justify-between px-6 py-4 glass-panel border-b-0 m-4 rounded-xl shadow-2xl">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-white">SentinelX</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-primary/80 font-semibold">Global Heatmap Monitor</p>
+</div>
+</div>
+<div class="h-8 w-px bg-slate-700 mx-2"></div>
+<div class="flex gap-6 items-center">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 uppercase">AI Engine</span>
+<span class="text-sm font-medium text-emerald-400 flex items-center gap-1">
+<span class="size-2 bg-emerald-400 rounded-full animate-pulse"></span> ACTIVE
+                    </span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 uppercase">Threat Level</span>
+<span class="text-sm font-medium text-threat-high">CRITICAL</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex bg-slate-800/50 rounded-lg p-1 border border-slate-700">
+<button class="px-4 py-1.5 rounded bg-primary text-white text-xs font-bold transition-all">REAL-TIME</button>
+<button class="px-4 py-1.5 rounded text-slate-400 text-xs font-bold hover:text-white transition-all">HISTORICAL</button>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg border border-slate-700">
+<span class="material-symbols-outlined text-sm text-primary">schedule</span>
+<span class="text-xs font-mono text-slate-300">14:42:09 GMT+5:30</span>
+</div>
+<button class="size-10 flex items-center justify-center glass-panel rounded-lg hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-white">settings</span>
+</button>
+</div>
+</header>
+<!-- Main HUD Elements -->
+<main class="relative z-10 flex h-[calc(100vh-180px)] px-4 gap-4 pointer-events-none">
+<!-- Left Control Panel -->
+<div class="w-80 flex flex-col gap-4 pointer-events-auto">
+<div class="glass-panel p-5 rounded-xl flex flex-col gap-6">
+<div>
+<h3 class="text-xs font-bold text-primary uppercase tracking-wider mb-4">Search Region</h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="w-full bg-slate-900/50 border-slate-700 rounded-lg pl-10 text-sm focus:ring-primary focus:border-primary text-slate-200" placeholder="City, State or Coordinates..." type="text"/>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-primary uppercase tracking-wider mb-4">Scam Density Filters</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 cursor-pointer hover:bg-primary/10 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-threat-low">work</span>
+<span class="text-sm font-medium text-slate-200">Fake Job Ads</span>
+</div>
+<input checked="" class="rounded bg-slate-800 border-slate-600 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 cursor-pointer hover:bg-primary/10 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-threat-high">alternate_email</span>
+<span class="text-sm font-medium text-slate-200">Phishing Links</span>
+</div>
+<input checked="" class="rounded bg-slate-800 border-slate-600 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 cursor-pointer hover:bg-primary/10 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">share</span>
+<span class="text-sm font-medium text-slate-200">Social Media Fraud</span>
+</div>
+<input class="rounded bg-slate-800 border-slate-600 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 cursor-pointer hover:bg-primary/10 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">fingerprint</span>
+<span class="text-sm font-medium text-slate-200">Identity Theft</span>
+</div>
+<input class="rounded bg-slate-800 border-slate-600 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-primary uppercase tracking-wider mb-4">State Analysis</h3>
+<select class="w-full bg-slate-900/50 border-slate-700 rounded-lg text-sm text-slate-300">
+<option>All India Coverage</option>
+<option>Karnataka (High Alert)</option>
+<option>Maharashtra</option>
+<option>Delhi NCR</option>
+<option>Tamil Nadu</option>
+</select>
+</div>
+</div>
+<!-- Stats Mini Panel -->
+<div class="glass-panel p-4 rounded-xl">
+<div class="grid grid-cols-2 gap-4">
+<div class="text-center p-2">
+<div class="text-[10px] text-slate-400 uppercase mb-1">Total Blocked</div>
+<div class="text-xl font-bold text-white">12,842</div>
+</div>
+<div class="text-center p-2 border-l border-slate-700">
+<div class="text-[10px] text-slate-400 uppercase mb-1">Active Alerts</div>
+<div class="text-xl font-bold text-threat-high">142</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Center Spacer -->
+<div class="flex-1"></div>
+<!-- Right Legend & Zoom Panel -->
+<div class="w-20 flex flex-col gap-4 pointer-events-auto items-end">
+<!-- Map Controls -->
+<div class="glass-panel rounded-xl flex flex-col">
+<button class="p-3 text-white hover:bg-primary/20 border-b border-slate-700 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="p-3 text-white hover:bg-primary/20 border-b border-slate-700 transition-all">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="p-3 text-white hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary">my_location</span>
+</button>
+</div>
+<!-- Intensity Legend -->
+<div class="glass-panel p-3 rounded-xl flex flex-col items-center gap-4 flex-1 max-h-96">
+<span class="text-[10px] font-bold text-slate-400 vertical-text rotate-180 uppercase tracking-widest whitespace-nowrap" style="writing-mode: vertical-rl;">DENSITY INTENSITY</span>
+<div class="flex-1 w-2 rounded-full relative overflow-hidden bg-slate-800">
+<div class="absolute inset-0 bg-gradient-to-t from-emerald-500 via-threat-low to-threat-high"></div>
+</div>
+<div class="flex flex-col gap-4 items-center">
+<div class="flex flex-col items-center">
+<div class="size-2 rounded-full bg-threat-high shadow-[0_0_8px_#ff0000]"></div>
+<span class="text-[8px] mt-1">High</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="size-2 rounded-full bg-threat-low shadow-[0_0_8px_#ff8c00]"></div>
+<span class="text-[8px] mt-1">Med</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+<span class="text-[8px] mt-1">Safe</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Ticker -->
+<footer class="fixed bottom-0 left-0 right-0 z-20">
+<div class="ticker-wrap h-12 flex items-center">
+<div class="ticker-content flex items-center gap-12 text-sm font-medium">
+<span class="flex items-center gap-2 text-threat-high">
+<span class="material-symbols-outlined text-base">warning</span>
+                    CRITICAL: SURGE IN FAKE JOB ADS DETECTED IN BENGALURU METRO AREA (LAST 5 MINS)
+                </span>
+<span class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-base">info</span>
+                    AI UPDATE: NEW WHATSAPP PHISHING PATTERN IDENTIFIED AND BLACKLISTED NATIONWIDE
+                </span>
+<span class="flex items-center gap-2 text-slate-300">
+<span class="material-symbols-outlined text-base">location_on</span>
+                    MONITORING: HIGH ACTIVITY IN MUMBAI CYBER HUBS - MONITORING SOCIAL MEDIA CHANNELS
+                </span>
+<span class="flex items-center gap-2 text-threat-low">
+<span class="material-symbols-outlined text-base">error</span>
+                    ALERT: MULTIPLE IDENTITY THEFT ATTEMPTS REPORTED FROM DELHI NCR REGION
+                </span>
+<!-- Repeat for seamless loop -->
+<span class="flex items-center gap-2 text-threat-high">
+<span class="material-symbols-outlined text-base">warning</span>
+                    CRITICAL: SURGE IN FAKE JOB ADS DETECTED IN BENGALURU METRO AREA (LAST 5 MINS)
+                </span>
+</div>
+</div>
+<!-- Bottom Status Bar -->
+<div class="bg-slate-900 border-t border-slate-800 px-6 py-1.5 flex justify-between items-center">
+<div class="flex items-center gap-4 text-[10px] text-slate-500 font-bold tracking-widest uppercase">
+<span class="flex items-center gap-1 text-emerald-500">
+<span class="size-1.5 bg-emerald-500 rounded-full"></span>
+                    SYSTEMS NOMINAL
+                </span>
+<span>LATENCY: 42MS</span>
+<span>UPTIME: 99.9%</span>
+</div>
+<div class="flex items-center gap-4 text-[10px] text-slate-500 font-bold tracking-widest uppercase">
+<span>API STATUS: OK</span>
+<span class="text-primary">SENTINEL_V4.2.0</span>
+</div>
+</div>
+</footer>
+<!-- Map Tooltip (Simulated) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none opacity-0 hover:opacity-100 transition-opacity">
+<div class="glass-panel p-3 rounded-lg border-primary shadow-xl scale-75">
+<div class="text-xs font-bold text-white mb-1">Cluster ID: #BGLR_42</div>
+<div class="flex gap-4">
+<div>
+<div class="text-[8px] text-slate-400">Scams</div>
+<div class="text-sm font-bold text-threat-high">1,204</div>
+</div>
+<div>
+<div class="text-[8px] text-slate-400">Trend</div>
+<div class="text-sm font-bold text-threat-low">+14%</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

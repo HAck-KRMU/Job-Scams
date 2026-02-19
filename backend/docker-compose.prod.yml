@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # MongoDB service for production
+  mongodb-prod:
+    image: mongo:5.0
+    container_name: job-scam-db-prod
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_prod_data:/data/db
+      - ./docker/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-password123}
+    networks:
+      - job-scam-prod-network
+    security_opt:
+      - no-new-privileges:true
+    # Additional security configurations for production
+    command: ["--auth"]
+
+  # Application service for production
+  app-prod:
+    build: .
+    container_name: job-scam-backend-prod
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb-prod
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME:-admin}:${MONGO_INITDB_ROOT_PASSWORD:-password123}@mongodb-prod:27017/jobscamdb?authSource=admin
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRE=${JWT_EXPIRE:-30d}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_EMAIL=${SMTP_EMAIL}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_FROM=${SMTP_FROM}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - CLIENT_URL=${CLIENT_URL}
+    networks:
+      - job-scam-prod-network
+    volumes:
+      - ./logs:/usr/src/app/logs
+    # Additional security configurations for production
+    security_opt:
+      - no-new-privileges:true
+    # Limit resources for production
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+# Volumes
+volumes:
+  mongodb_prod_data:
+
+# Networks
+networks:
+  job-scam-prod-network:
+    driver: bridge

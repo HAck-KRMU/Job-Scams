@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SentinelX Dashboard Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f68f9",
+                        "accent-purple": "#a855f7",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#0a0c10",
+                        "glass": "rgba(255, 255, 255, 0.03)",
+                        "glass-border": "rgba(255, 255, 255, 0.1)"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sidebar-item-active {
+            background: linear-gradient(90deg, rgba(31, 104, 249, 0.2) 0%, rgba(31, 104, 249, 0) 100%);
+            border-left: 3px solid #1f68f9;
+        }
+        .neon-glow-blue {
+            box-shadow: 0 0 15px rgba(31, 104, 249, 0.3);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-20 lg:w-64 glassmorphism border-r border-slate-800 flex flex-col z-50">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white neon-glow-blue">
+<span class="material-symbols-outlined text-2xl">shield_with_heart</span>
+</div>
+<h1 class="hidden lg:block text-xl font-bold tracking-tight text-slate-100">SentinelX</h1>
+</div>
+<nav class="flex-1 px-3 space-y-2 mt-4">
+<div class="sidebar-item-active flex items-center gap-4 px-4 py-3 rounded-lg text-primary cursor-pointer transition-all">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="hidden lg:block font-medium">SOC Overview</span>
+</div>
+<div class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 cursor-pointer transition-all">
+<span class="material-symbols-outlined">radar</span>
+<span class="hidden lg:block font-medium">Threat Hunter</span>
+</div>
+<div class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 cursor-pointer transition-all">
+<span class="material-symbols-outlined">person_search</span>
+<span class="hidden lg:block font-medium">Scam Detector</span>
+</div>
+<div class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 cursor-pointer transition-all">
+<span class="material-symbols-outlined">map</span>
+<span class="hidden lg:block font-medium">Geospatial Intelligence</span>
+</div>
+<div class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 cursor-pointer transition-all">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="hidden lg:block font-medium">Incident Logs</span>
+</div>
+</nav>
+<div class="p-4 mt-auto border-t border-slate-800">
+<div class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 cursor-pointer transition-all">
+<span class="material-symbols-outlined">settings</span>
+<span class="hidden lg:block font-medium">SOC Settings</span>
+</div>
+<div class="mt-4 flex items-center gap-3 px-4">
+<div class="size-10 rounded-full bg-slate-700 overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="User avatar profile picture for analyst" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDuRyhlcWmix92Kr1WWqSogYznNPviMzrGsJlXfwYkpbeSsANZX_5TkGNYHb1RbZxj8B04CTYeooWF8_ci1sgJrzRrEEQLvOEhCicQ5eYq4g6UmKvPqwdMIcl4YEqKYVGl7TM2yOP5QrbTNMp9HIG5WT980A250AgsVpzGGhJsBkvK0XUbWNh3cxU_5oNZ_HPnqnCU_347LBC8IiPbv3L0tXEI8A8Dwsp4q_0w_w5aQy8JAm2EkqTRWU4hIjnD94ZVmuhpu20eFR8"/>
+</div>
+<div class="hidden lg:block">
+<p class="text-sm font-bold text-slate-100">Analyst 0x72</p>
+<p class="text-xs text-slate-500 uppercase tracking-widest">Level 4 Tier</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-y-auto relative">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-40 glassmorphism border-b border-slate-800 px-8 py-4 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<h2 class="text-xl font-bold text-slate-100">Executive SOC Overview</h2>
+<div class="hidden md:flex items-center bg-slate-800/50 rounded-lg px-3 py-1.5 border border-slate-700">
+<span class="material-symbols-outlined text-slate-400 text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-slate-300 w-64 placeholder:text-slate-500" placeholder="Search IP, Hash, or Node..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full text-xs font-bold border border-emerald-500/20">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+                        SYSTEMS NOMINAL
+                    </div>
+<button class="glassmorphism p-2 rounded-lg text-slate-300 hover:text-white transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-primary rounded-full border border-background-dark"></span>
+</button>
+<button class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export Intelligence
+                    </button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- KPI Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glassmorphism p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">gpp_maybe</span>
+</div>
+<p class="text-slate-400 font-medium mb-1">Total Threats Detected</p>
+<div class="flex items-baseline gap-3">
+<h3 class="text-3xl font-bold text-slate-100">42,891</h3>
+<span class="text-emerald-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span> 12.4%
+                            </span>
+</div>
+<div class="mt-4 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-[72%] neon-glow-blue"></div>
+</div>
+</div>
+<div class="glassmorphism p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">query_stats</span>
+</div>
+<p class="text-slate-400 font-medium mb-1">Scam Probability Index</p>
+<div class="flex items-baseline gap-3">
+<h3 class="text-3xl font-bold text-slate-100">84.2%</h3>
+<span class="text-slate-500 text-sm font-bold">In-Network Risk</span>
+</div>
+<div class="mt-4 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-accent-purple h-full rounded-full w-[84%] neon-glow-purple"></div>
+</div>
+</div>
+<div class="glassmorphism p-6 rounded-xl relative overflow-hidden group border-red-500/20">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-red-500">emergency_home</span>
+</div>
+<p class="text-slate-400 font-medium mb-1">Critical Active Alerts</p>
+<div class="flex items-baseline gap-3">
+<h3 class="text-3xl font-bold text-slate-100">156</h3>
+<span class="text-red-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-sm">priority_high</span> HIGH SEVERITY
+                            </span>
+</div>
+<div class="mt-4 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-red-500 h-full rounded-full w-[45%] shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
+</div>
+</div>
+</div>
+<!-- Main Data Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Threat Velocity Chart -->
+<div class="lg:col-span-2 glassmorphism p-6 rounded-xl flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h4 class="text-lg font-bold text-slate-100">Real-time Threat Velocity</h4>
+<p class="text-sm text-slate-500">Live monitoring of job scams across major social platforms</p>
+</div>
+<select class="bg-slate-800 border-slate-700 text-slate-300 text-xs rounded-lg focus:ring-primary">
+<option>Last 24 Hours</option>
+<option>Last 7 Days</option>
+<option>Live Feed</option>
+</select>
+</div>
+<div class="flex-1 min-h-[300px] relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 300">
+<defs>
+<lineargradient id="gradient-blue" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#1f68f9" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#1f68f9" stop-opacity="0"></stop>
+</lineargradient>
+<lineargradient id="gradient-purple" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#a855f7" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#a855f7" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 250 Q 100 230, 200 180 T 400 150 T 600 200 T 800 50 V 300 H 0 Z" fill="url(#gradient-blue)"></path>
+<path d="M0 250 Q 100 230, 200 180 T 400 150 T 600 200 T 800 50" fill="none" stroke="#1f68f9" stroke-width="3"></path>
+<path d="M0 280 Q 150 250, 300 270 T 450 180 T 600 220 T 800 120 V 300 H 0 Z" fill="url(#gradient-purple)"></path>
+<path d="M0 280 Q 150 250, 300 270 T 450 180 T 600 220 T 800 120" fill="none" stroke="#a855f7" stroke-dasharray="8 4" stroke-width="2"></path>
+</svg>
+<div class="absolute bottom-0 w-full flex justify-between text-[10px] text-slate-500 px-1">
+<span>00:00</span><span>04:00</span><span>08:00</span><span>12:00</span><span>16:00</span><span>20:00</span><span>23:59</span>
+</div>
+</div>
+</div>
+<!-- Scam Category Distribution -->
+<div class="glassmorphism p-6 rounded-xl flex flex-col">
+<h4 class="text-lg font-bold text-slate-100 mb-6">Fraud Category Distribution</h4>
+<div class="flex-1 flex flex-col justify-center items-center">
+<div class="relative size-48">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#1e293b" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#1f68f9" stroke-dasharray="251.2" stroke-dashoffset="100.4" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#a855f7" stroke-dasharray="251.2" stroke-dashoffset="200.9" stroke-linecap="round" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#f59e0b" stroke-dasharray="251.2" stroke-dashoffset="240" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold text-slate-100">71%</span>
+<span class="text-[10px] text-slate-500 uppercase">Automated</span>
+</div>
+</div>
+<div class="w-full mt-8 space-y-3">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-primary"></div>
+<span class="text-slate-400">Fake Recruiter</span>
+</div>
+<span class="font-bold text-slate-200">42%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-accent-purple"></div>
+<span class="text-slate-400">Phishing Links</span>
+</div>
+<span class="font-bold text-slate-200">28%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-amber-500"></div>
+<span class="text-slate-400">Payment Fraud</span>
+</div>
+<span class="font-bold text-slate-200">18%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-slate-600"></div>
+<span class="text-slate-400">Others</span>
+</div>
+<span class="font-bold text-slate-200">12%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- India Heatmap & Recent Incidents Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 pb-8">
+<!-- Geographic Heatmap -->
+<div class="xl:col-span-1 glassmorphism p-6 rounded-xl overflow-hidden flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-lg font-bold text-slate-100">India Scam Density Map</h4>
+<span class="material-symbols-outlined text-slate-400">info</span>
+</div>
+<div class="flex-1 bg-slate-900/50 rounded-lg relative overflow-hidden group min-h-[300px]">
+<!-- Placeholder for actual heatmap vector -->
+<div class="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-30 grayscale" data-alt="India geographical outline heatmap map" data-location="India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAf-T5JPMRRLH2Ie2kkTzd_l0LOr2R2rX-HdW5zxwBgWWrsx90FQgTfcxaCl-MZ9iHrOOm4-HpeM-Mto5niKMhgKCzVR8Q_8asfhxYyLDmzlpNTxPYkUrOttNiOApSJ-4R-ev73m7Yl0epyUPwjXRwJWXhl0j2L-HFXED1JuDkmXgNqfx8Pq7i6kepE7XDg7NuwP6bWH9Kl4_N-zYKHXGUu6PUZB_Jdnct8uvyrDtR1WIUYQYrj0SSKYdGqsRX8EKvaM8plv5g0r-M');">
+</div>
+<!-- Pulsing Nodes -->
+<div class="absolute top-[45%] left-[30%] group">
+<div class="size-4 bg-red-500 rounded-full animate-ping opacity-75"></div>
+<div class="size-3 bg-red-600 rounded-full absolute inset-0.5"></div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-slate-800 text-[10px] px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-10">Mumbai: Critical (942)</div>
+</div>
+<div class="absolute top-[65%] left-[45%] group">
+<div class="size-4 bg-amber-500 rounded-full animate-ping opacity-75"></div>
+<div class="size-3 bg-amber-600 rounded-full absolute inset-0.5"></div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-slate-800 text-[10px] px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-10">Bangalore: High (712)</div>
+</div>
+<div class="absolute top-[25%] left-[48%] group">
+<div class="size-4 bg-red-500 rounded-full animate-ping opacity-75"></div>
+<div class="size-3 bg-red-600 rounded-full absolute inset-0.5"></div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-slate-800 text-[10px] px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-10">Gurgaon: Critical (881)</div>
+</div>
+<!-- Legend -->
+<div class="absolute bottom-4 left-4 space-y-2">
+<div class="flex items-center gap-2 text-[10px]">
+<div class="size-2 rounded-full bg-red-500"></div>
+<span class="text-slate-400">Critical Cluster</span>
+</div>
+<div class="flex items-center gap-2 text-[10px]">
+<div class="size-2 rounded-full bg-amber-500"></div>
+<span class="text-slate-400">Moderate Alert</span>
+</div>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-2 text-xs">
+<div class="bg-slate-800/40 p-2 rounded border border-slate-700/50">
+<p class="text-slate-500">Max Density</p>
+<p class="text-slate-100 font-bold">Delhi NCR</p>
+</div>
+<div class="bg-slate-800/40 p-2 rounded border border-slate-700/50">
+<p class="text-slate-500">Growth Rate</p>
+<p class="text-emerald-500 font-bold">+18% MoM</p>
+</div>
+</div>
+</div>
+<!-- Recent Incidents Feed -->
+<div class="xl:col-span-2 glassmorphism p-6 rounded-xl flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-lg font-bold text-slate-100">Live Incident Stream</h4>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20">All Sources</button>
+<button class="px-3 py-1 bg-slate-800 text-slate-400 text-xs font-bold rounded-lg border border-slate-700">LinkedIn</button>
+<button class="px-3 py-1 bg-slate-800 text-slate-400 text-xs font-bold rounded-lg border border-slate-700">WhatsApp</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="text-slate-500 border-b border-slate-800">
+<th class="pb-3 font-medium">Incident ID</th>
+<th class="pb-3 font-medium">Target / Source</th>
+<th class="pb-3 font-medium">Category</th>
+<th class="pb-3 font-medium">Confidence</th>
+<th class="pb-3 font-medium">Severity</th>
+<th class="pb-3 font-medium text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-800/50">
+<tr class="group hover:bg-white/[0.02] transition-colors">
+<td class="py-4 font-mono text-primary text-xs">SN-8291-LX</td>
+<td class="py-4">
+<div class="flex items-center gap-3">
+<img alt="Social Media Icon" class="size-5 rounded" data-alt="LinkedIn platform brand logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5NtyHo0mJ_EHQaRndXeG2ExgIvxq-JsWM6L0SDq75qOq1V_onmASFAUq3RYfEk8P9FO6iSnGb9JLZZnEiviXPrjwEXSQiP-q3u-M8OyjkK-KkYe4rvE_XfVZigaNp6dYXMLwC3vuyqMufQQHmQ8JWf_sU_B6SgoM-DRff8HgUKziPx_Z5PxEsA5RQtXY-knucnsHmmI6vCCZA8iAXoW4iPeREru-gEAHKHje7D33b5jklvq9gHjmYZBt19dCUyvPVh_Oo8QU1RO8"/>
+<div>
+<p class="font-bold text-slate-200">Tata Tech Impersonation</p>
+<p class="text-[10px] text-slate-500 tracking-wide uppercase">Source: LinkedIn API</p>
+</div>
+</div>
+</td>
+<td class="py-4">
+<span class="bg-slate-800 text-slate-400 px-2 py-0.5 rounded text-[11px] uppercase tracking-wider font-bold">Fake Recruiter</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 bg-slate-800 h-1 rounded-full">
+<div class="bg-emerald-500 h-full w-[98%]"></div>
+</div>
+<span class="text-xs font-bold text-emerald-500">98%</span>
+</div>
+</td>
+<td class="py-4">
+<span class="flex items-center gap-1.5 text-red-500 font-bold text-[10px] bg-red-500/10 px-2 py-1 rounded-full border border-red-500/20 w-fit">
+<span class="size-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                                                CRITICAL
+                                            </span>
+</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-slate-500 hover:text-white transition-colors">open_in_new</button>
+</td>
+</tr>
+<tr class="group hover:bg-white/[0.02] transition-colors">
+<td class="py-4 font-mono text-primary text-xs">SN-8288-LX</td>
+<td class="py-4">
+<div class="flex items-center gap-3">
+<img alt="Social Media Icon" class="size-5 rounded" data-alt="WhatsApp platform brand logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2TCt4lfxy4scd6_riYkgYIpmzgFxQ8kVmn8CEpmcMvYsGDl3NgZyEwUDWRachVUKiBimP7OS-IdTWzu1WkjjKW3eCdo4LHLqyAnjqFxjarLPT9vtRxlmiXiBrWo4flbCTRwx5Vs-FBxMWQccCTcZkod41XrdvaiVv2itRtui4uGemPFzkVBK-LUaQBye7cjgv7ELVd09FEaCo6iHgUlEmSnqb7T9-LMlmKejuFCIMIBRlxBXj8BjO3KpKoPHGprfRz1m8o0LOGLo"/>
+<div>
+<p class="font-bold text-slate-200">Work-from-Home Bait</p>
+<p class="text-[10px] text-slate-500 tracking-wide uppercase">Source: Network Probe</p>
+</div>
+</div>
+</td>
+<td class="py-4">
+<span class="bg-slate-800 text-slate-400 px-2 py-0.5 rounded text-[11px] uppercase tracking-wider font-bold">Payment Fraud</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 bg-slate-800 h-1 rounded-full">
+<div class="bg-amber-500 h-full w-[76%]"></div>
+</div>
+<span class="text-xs font-bold text-amber-500">76%</span>
+</div>
+</td>
+<td class="py-4">
+<span class="flex items-center gap-1.5 text-amber-500 font-bold text-[10px] bg-amber-500/10 px-2 py-1 rounded-full border border-amber-500/20 w-fit">
+<span class="size-1.5 bg-amber-500 rounded-full"></span>
+                                                MEDIUM
+                                            </span>
+</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-slate-500 hover:text-white transition-colors">open_in_new</button>
+</td>
+</tr>
+<tr class="group hover:bg-white/[0.02] transition-colors">
+<td class="py-4 font-mono text-primary text-xs">SN-8274-LX</td>
+<td class="py-4">
+<div class="flex items-center gap-3">
+<img alt="Social Media Icon" class="size-5 rounded" data-alt="Telegram platform brand logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5wlcmQLvNoG3fkWXRe6A-hrrwZfZiZ2YaoCRIAAVVm4QTKZ0zCFPZOv1_g5vDeX6M0sZoWbC1NLIaIEkb57eUCeeNjiyBxaeloVDS81ogiMJwFv5BlrAqrskamNwJ8T4nmK-JlCxOwhWySrQpF4JfcHJWPUhhveLhDYY81lAuIQIZTynffgReSoqqfjhh9SKwoHJ6IYY6MWssjK4UNTeXsPoOORPlmK67M_6u27g2ynEwIiBkCUwHMq7ECbXKq2Cpk7GXvGxxRIQ"/>
+<div>
+<p class="font-bold text-slate-200">KYC Phishing Loop</p>
+<p class="text-[10px] text-slate-500 tracking-wide uppercase">Source: URL Sandbox</p>
+</div>
+</div>
+</td>
+<td class="py-4">
+<span class="bg-slate-800 text-slate-400 px-2 py-0.5 rounded text-[11px] uppercase tracking-wider font-bold">Phishing Link</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 bg-slate-800 h-1 rounded-full">
+<div class="bg-emerald-500 h-full w-[92%]"></div>
+</div>
+<span class="text-xs font-bold text-emerald-500">92%</span>
+</div>
+</td>
+<td class="py-4">
+<span class="flex items-center gap-1.5 text-orange-500 font-bold text-[10px] bg-orange-500/10 px-2 py-1 rounded-full border border-orange-500/20 w-fit">
+<span class="size-1.5 bg-orange-500 rounded-full"></span>
+                                                HIGH
+                                            </span>
+</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-slate-500 hover:text-white transition-colors">open_in_new</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-auto pt-4 flex items-center justify-between">
+<p class="text-xs text-slate-500">Showing 10 of 2,491 total active incidents</p>
+<div class="flex gap-2">
+<button class="glassmorphism p-1 rounded hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="glassmorphism p-1 rounded hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Overlay Grain Texture (Subtle high-tech effect) -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.015] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] z-[99]"></div>
+</body></html>

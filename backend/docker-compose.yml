@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # MongoDB service
+  mongodb:
+    image: mongo:5.0
+    container_name: job-scam-db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./docker/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password123
+    networks:
+      - job-scam-network
+
+  # Application service
+  app:
+    build: .
+    container_name: job-scam-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:password123@mongodb:27017/jobscamdb?authSource=admin
+      - JWT_SECRET=supersecretjwtkeyforjobscamdetectionplatform
+      - JWT_EXPIRE=30d
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
+      - SMTP_EMAIL=noreply@jobscamdetection.com
+      - SMTP_PASSWORD=password
+      - SMTP_FROM=Job Scam Detection Platform
+      - FRONTEND_URL=http://localhost:3000
+      - CLIENT_URL=http://localhost:3000
+    networks:
+      - job-scam-network
+    volumes:
+      - ./logs:/usr/src/app/logs
+
+  # MailHog for testing emails
+  mailhog:
+    image: mailhog/mailhog
+    container_name: job-scam-mailhog
+    restart: always
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+    networks:
+      - job-scam-network
+
+# Volumes
+volumes:
+  mongodb_data:
+
+# Networks
+networks:
+  job-scam-network:
+    driver: bridge
